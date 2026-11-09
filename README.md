@@ -1,1 +1,1 @@
-# RAG Based Research Assisant
+# RAG based research assist
