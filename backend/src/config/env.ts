@@ -25,13 +25,13 @@ const envSchema = z.object({
 //     .string()
 //     .min(1, "GEMINI_API_KEY is required"),
 
-//   SUPABASE_URL: z
-//     .string()
-//     .url("Invalid Supabase URL"),
+  SUPABASE_URL: z
+    .string()
+    .url("Invalid Supabase URL"),
 
-//   SUPABASE_SERVICE_ROLE_KEY: z
-//     .string()
-//     .min(1, "SUPABASE_SERVICE_ROLE_KEY is required"),
+  SUPABASE_SECRET_KEY: z
+    .string()
+    .min(1, "SUPABASE_SERVICE_ROLE_KEY is required"),
 });
 
 // Validate environment variables
