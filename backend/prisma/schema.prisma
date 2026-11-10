@@ -11,3 +11,32 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Document {
+  id          String   @id @default(uuid()) @db.Uuid
+  filename    String
+  storagePath String?  @map("storage_path")
+  fileSize    BigInt?  @map("file_size")
+  status      String   @default("pending")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  chunks      DocumentChunk[]
+
+  @@map("documents")
+}
+
+model DocumentChunk {
+  id         String   @id @default(uuid()) @db.Uuid
+  documentId String   @map("document_id") @db.Uuid
+  content    String
+  chunkIndex Int      @map("chunk_index")
+  pageNumber Int?     @map("page_number")
+  embedding  Unsupported("vector(1536)")?
+  metadata   Json     @default("{}")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@unique([documentId, chunkIndex])
+  @@map("document_chunks")
+}
